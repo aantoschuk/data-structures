@@ -47,19 +47,17 @@ func (l *LinkedList[T]) Insert(value T, position int) bool {
 }
 
 // Stringer, fancy print list
-func (l *LinkedList[T]) String() string {
-	var result string
-	current := l.head
-	index := 0
+func (l *LinkedList[T]) String() (result string) {
 	// Traverse through the linked list and accumulate the node data into result
-	for current != nil {
+	l.Traverse(func(node *Node[T], index int) bool {
+		// If this is not a head, then add arrow for a fancy view
 		if index > 0 {
 			result += " -> "
 		}
-		result += fmt.Sprintf("%v", current.data)
-		current = current.next
-		index++
+		result += fmt.Sprintf("%v", node.data)
+		// Return false is we need to iterave over each element in the list
+		return false
+	})
 
-	}
-	return result
+	return
 }
